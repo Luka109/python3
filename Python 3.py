@@ -1,17 +1,34 @@
+
 produtos = []
 
 for i in range(10):
     print(f"\nProduto {i + 1}")
 
-    nome = input("Digite o nome do produto: ")
-    preco = float(input("Digite o preço: R$ "))
+    nome = input("Digite o nome do produto: ").strip()
+
+    while not nome:
+        print("O nome não pode ficar vazio.")
+        nome = input("Digite o nome do produto: ").strip()
+
+    while True:
+        try:
+            entrada = input("Digite o preço: R$ ").strip()
+            preco = float(entrada.replace(",", "."))
+
+            if preco < 0:
+                print("O preço não pode ser negativo.")
+                continue
+
+            break
+        except ValueError:
+            print("Preço inválido! Digite um valor como 10,50 ou 10.50.")
 
     produtos.append({
         "nome": nome,
         "preco": preco
     })
 
-# Encontrando o mais caro e o mais barato
+# Encontrando o produto mais caro e o mais barato
 mais_caro = max(produtos, key=lambda produto: produto["preco"])
 mais_barato = min(produtos, key=lambda produto: produto["preco"])
 
